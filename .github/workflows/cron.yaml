@@ -1,12 +1,13 @@
 name: 'Check ranking for all keywords'
+
 on:
   schedule:
-    - cron: '0 0 * * *'  # This schedule runs the job every day at midnight UTC
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+  workflow_dispatch:     # Allows manual trigger
 
 jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
       - name: Call our API route
-        run: |
-          curl -X GET 'https://nishkun-rank-tracker.vercel.app/api/check-for-all-keywords'
+        run: curl -s -o /dev/null -w "%{http_code}" 'https://nishkun-rank-tracker.vercel.app/api/check-for-all-keywords'
